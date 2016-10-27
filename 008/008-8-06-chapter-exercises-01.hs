@@ -39,3 +39,17 @@ mc91 x
   | x == 91 = x
   | x < 91 = mc91 (x + 1)
   | x > 91 = mc91 (x - 1)
+
+data DividedResult = Result (Quotient, Remainder) | DividedByZero deriving Show
+
+type Numerator = Integer
+type Denominator = Integer
+type Quotient = Integer
+type Remainder = Integer
+
+dividedBy :: Numerator -> Denominator -> DividedResult
+dividedBy _ 0 = DividedByZero
+dividedBy num denom = go num denom 0
+                      where go num denom count
+                              | (num - denom * count) < denom = Result (count, num - denom * count)
+                              | otherwise = go num denom (count + 1)
